@@ -1,1 +1,1812 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة إدارة المينيو — M&amp;S</title>
+    <meta
+      name="description"
+      content="لوحة تحكم M&amp;S لإدارة الأقسام والمنتجات والصور وإعدادات الواتساب."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+:root {
+  --bg-canvas: #161210;
+  --bg-surface: #211b18;
+  --bg-subtle: #2c2420;
+  --topbar-bg: rgba(22, 18, 16, 0.9);
+  --mobile-bar-bg: rgba(33, 27, 24, 0.95);
+  --glass-surface: rgba(33, 27, 24, 0.86);
+  --in-cart-bg: linear-gradient(145deg, rgba(42, 133, 107, 0.14), rgba(33, 27, 24, 0.98));
+  --featured-card-bg: linear-gradient(155deg, rgba(229, 164, 92, 0.1), rgba(33, 27, 24, 0.98));
+  --glass-green: rgba(42, 133, 107, 0.16);
+  --glass-green-border: rgba(229, 164, 92, 0.28);
+  --accent: #2a856b;
+  --accent-hover: #216b56;
+  --accent-ink: #ffffff;
+  --price-accent: #e5a45c;
+  --cart-btn-bg: #e5a45c;
+  --cart-btn-ink: #1e1612;
+  --minus-bg: #3c312b;
+  --minus-ink: #f6efe6;
+  --ink-primary: #f6efe6;
+  --ink-secondary: #cbbcae;
+  --ink-muted: #9e8d7f;
+  --border-hairline: #382e28;
+  --border-strong: #52443b;
+  --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  --dot-shadow: 0 2px 10px rgba(229, 164, 92, 0.55);
+  --danger: #fca5a5;
+  --danger-bg: rgba(153, 27, 27, 0.24);
+  --danger-border: rgba(248, 113, 113, 0.38);
+  --footer-bg: linear-gradient(180deg, #1b1613 0%, #120e0c 100%);
+  --footer-border: rgba(229, 164, 92, 0.22);
+  --wordmark-bg: radial-gradient(circle at 50% 0%, rgba(229, 164, 92, 0.14), rgba(33, 27, 24, 0.85));
+  --wordmark-border: rgba(229, 164, 92, 0.32);
+  --location-chip-bg: rgba(42, 133, 107, 0.14);
+  --location-chip-hover: rgba(42, 133, 107, 0.28);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --font-sans: "IBM Plex Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-serif: "Amiri", Georgia, serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
 
+html[data-theme="light"] {
+  --bg-canvas: #faf6f0;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f2eae0;
+  --topbar-bg: rgba(250, 246, 240, 0.92);
+  --mobile-bar-bg: rgba(255, 255, 255, 0.96);
+  --glass-surface: rgba(255, 255, 255, 0.88);
+  --in-cart-bg: linear-gradient(145deg, rgba(35, 116, 93, 0.08), #ffffff);
+  --featured-card-bg: linear-gradient(155deg, rgba(181, 106, 30, 0.08), #ffffff);
+  --glass-green: rgba(35, 116, 93, 0.12);
+  --glass-green-border: rgba(181, 106, 30, 0.3);
+  --accent: #23745d;
+  --accent-hover: #1b5d4a;
+  --accent-ink: #ffffff;
+  --price-accent: #b56a1e;
+  --cart-btn-bg: #1f1814;
+  --cart-btn-ink: #faf6f0;
+  --minus-bg: #ede4d8;
+  --minus-ink: #2b211b;
+  --ink-primary: #1f1814;
+  --ink-secondary: #5c4d43;
+  --ink-muted: #7a695d;
+  --border-hairline: #e7ddd0;
+  --border-strong: #d3c4b2;
+  --card-shadow: 0 12px 26px rgba(45, 31, 20, 0.09);
+  --dot-shadow: 0 2px 10px rgba(35, 116, 93, 0.45);
+  --danger: #b91c1c;
+  --danger-bg: rgba(220, 38, 38, 0.08);
+  --danger-border: rgba(220, 38, 38, 0.28);
+  --footer-bg: linear-gradient(180deg, #f3ece2 0%, #eae0d2 100%);
+  --footer-border: rgba(181, 106, 30, 0.22);
+  --wordmark-bg: radial-gradient(circle at 50% 0%, rgba(181, 106, 30, 0.12), rgba(255, 255, 255, 0.94));
+  --wordmark-border: rgba(181, 106, 30, 0.35);
+  --location-chip-bg: rgba(35, 116, 93, 0.1);
+  --location-chip-hover: rgba(35, 116, 93, 0.2);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  line-height: 1.65;
+  overflow-x: hidden;
+  transition: background-color 260ms ease, color 260ms ease;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.editorial-title {
+  font-family: var(--font-serif);
+  line-height: 1.44;
+  text-wrap: balance;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 32px;
+  }
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--topbar-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.topbar-inner {
+  min-height: 66px;
+  padding-block: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .topbar-inner {
+    min-height: 74px;
+    padding-block: 12px;
+  }
+}
+
+.brand-mark {
+  font-family: var(--font-serif);
+  font-size: 1.48rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  unicode-bidi: isolate;
+  color: var(--price-accent);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.brand-wordmark {
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 2.8vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  unicode-bidi: isolate;
+  color: var(--price-accent);
+  text-decoration: none;
+  padding: 4px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--wordmark-border);
+  background: var(--wordmark-bg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.cart-trigger-btn {
+  min-height: 42px;
+  padding: 8px 16px;
+  background: var(--cart-btn-bg);
+  color: var(--cart-btn-ink);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, transform 180ms ease;
+}
+
+.cart-trigger-btn:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 22px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  min-height: 44px;
+  padding: 10px 18px;
+  background: var(--glass-surface);
+  color: var(--ink-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--ink-primary);
+  background: var(--bg-subtle);
+}
+
+.section-kicker {
+  margin: 0 0 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.section-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.35rem, 2.3vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink-primary);
+}
+
+.theme-toggle-btn {
+  min-height: 44px;
+  padding: 8px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--ink-primary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.theme-icon {
+  color: var(--price-accent);
+  flex-shrink: 0;
+}
+
+.theme-icon--moon {
+  display: none;
+}
+
+html[data-theme="light"] .theme-icon--sun {
+  display: none;
+}
+
+html[data-theme="light"] .theme-icon--moon {
+  display: block;
+}
+
+.category-tab {
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-hairline);
+  background: var(--glass-surface);
+  color: var(--ink-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.category-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.site-footer {
+  padding-block: 36px 40px;
+  border-top: 1px solid var(--footer-border);
+  background: var(--footer-bg);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: start;
+  }
+}
+
+.admin-section {
+  padding-block: 28px 64px;
+}
+
+.admin-header-bar {
+  background: var(--glass-surface);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  
+}
+
+
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+  
+}
+
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+
+}
+
+@media (min-width: 1024px) {
+  .admin-grid {
+    grid-template-columns: 5fr 7fr;
+  }
+}
+
+.admin-panel-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: 22px;
+}
+
+.admin-panel-card h3 {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+}
+
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 540px) {
+  .field-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.field-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.field-input,
+.field-select,
+.field-textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-size: 0.92rem;
+}
+
+.field-input:focus,
+.field-select:focus,
+.field-textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  background: var(--bg-surface);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-row {
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  background: var(--bg-canvas);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-row-info {
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
+.admin-row-title {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.admin-row-meta {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+.admin-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-small {
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--ink-primary);
+  cursor: pointer;
+}
+
+.btn-danger {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.preset-thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: 540px) {
+  .preset-thumbs {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.preset-thumb-btn {
+  padding: 0;
+  border: 2px solid var(--border-hairline);
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+  background: var(--bg-subtle);
+}
+
+.preset-thumb-btn.is-selected {
+  border-color: var(--accent);
+}
+
+.preset-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sr-only-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.studio-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-canvas);
+}
+
+.studio-preview-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-subtle);
+  flex-shrink: 0;
+}
+
+.studio-upload-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.studio-upload-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--ink-muted);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+}
+
+.toast-banner {
+  position: fixed;
+  top: 74px;
+  left: 24px;
+  max-width: 390px;
+  z-index: 70;
+  background: var(--cart-btn-bg);
+  color: var(--cart-btn-ink);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.admin-login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--bg-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 36px 30px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.admin-login-card h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+</style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
+  </head>
+  <body>
+    <!-- Admin Login Screen (Firebase Authentication) -->
+    <div id="admin-login-screen" class="admin-login-overlay is-hidden">
+      <div class="admin-login-card">
+        <div class="brand-wordmark" dir="ltr" style="margin-inline: auto; margin-bottom: 16px;">M&amp;S</div>
+        <h2>تسجيل دخول لوحة الإدارة</h2>
+        
+        
+
+        <form id="admin-login-form" class="form-stack">
+          <div class="field-group" style="text-align: right;">
+            <label for="admin-email" class="field-label">البريد الإلكتروني</label>
+            <input id="admin-email" class="field-input" type="email" required placeholder="admin@example.com" dir="ltr" />
+          </div>
+
+          <div class="field-group" style="text-align: right;">
+            <label for="admin-password" class="field-label">كلمة المرور (٦ أحرف على الأقل)</label>
+            <input id="admin-password" class="field-input" type="password" required minlength="6" placeholder="••••••••" dir="ltr" />
+          </div>
+
+          <div id="admin-auth-error" class="is-hidden" style="color: var(--danger); font-size: 0.85rem; text-align: right; margin-top: 4px;"></div>
+
+          <div class="hero-actions" style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+            <button type="submit" id="admin-login-btn" class="btn-primary" style="width: 100%;">تسجيل الدخول</button>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <a href="index.html" id="admin-brand-title" class="brand-mark">M&amp;S · الإدارة</a>
+          
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+          
+
+          <button
+            type="button"
+            id="theme-toggle-btn"
+            class="theme-toggle-btn theme-toggle-btn--icon"
+            aria-label="التبديل بين الوضعين"
+            aria-pressed="false"
+          >
+            <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+            </svg>
+            <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+          </button>
+
+          <button type="button" id="admin-logout-btn" class="btn-secondary" style="font-size: 0.85rem; padding: 6px 12px;">تسجيل الخروج</button>
+
+          
+        </div>
+      </div>
+    </header>
+
+    
+      <div class="admin-tabs" role="tablist" aria-label="أقسام لوحة الإدارة">
+        <button type="button" class="category-tab is-active" data-admin-tab="products">
+          المنتجات والبينتو
+        </button>
+        <button type="button" class="category-tab" data-admin-tab="categories">
+          الأقسام
+        </button>
+        <button type="button" class="category-tab" data-admin-tab="settings">
+          إعدادات الكافيه والواتساب
+        </button>
+      </div>
+
+      <!-- Tab 1: Products CMS -->
+      <section id="admin-tab-products" class="admin-grid">
+        <div class="admin-panel-card">
+          <h3 id="product-form-heading">إضافة منتج جديد</h3>
+          <form id="product-form" class="form-stack">
+            <input type="hidden" id="prod-id" />
+
+            <div class="field-group">
+              <label for="prod-name" class="field-label">اسم المنتج</label>
+              <input id="prod-name" class="field-input" type="text" required placeholder="مثال: لاتيه الورد الدمشقي" />
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label for="prod-category" class="field-label">القسم</label>
+                <select id="prod-category" class="field-select" required></select>
+              </div>
+              <div class="field-group">
+                <label for="prod-price" class="field-label">السعر (ل.س)</label>
+                <input id="prod-price" class="field-input tabular" dir="ltr" type="number" min="0" step="500" required placeholder="28000" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label for="prod-bento-size" class="field-label">حجم البطاقة في Bento Grid</label>
+                <select id="prod-bento-size" class="field-select">
+                  <option value="compact">مدمجة (1×1)</option>
+                  <option value="wide">عريضة (2×1)</option>
+                  <option value="featured">مميزة كبيرة (2×2)</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="prod-options" class="field-label">خيارات التخصيص (افصل بفاصلة عربية ،)</label>
+                <input id="prod-options" class="field-input" type="text" placeholder="ساخن، مثلج، حليب شوفان" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="prod-short-desc" class="field-label">وصف مختصر يظهر على البطاقة</label>
+              <input id="prod-short-desc" class="field-input" type="text" required placeholder="مذاق ناعم مع رغوة مخملية" />
+            </div>
+
+            <div class="field-group">
+              <span class="field-label">صورة الصنف (من الاستوديو)</span>
+              <div class="studio-upload-row">
+                <img id="prod-image-preview" class="studio-preview-thumb" src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80" alt="معاينة صورة المنتج" />
+                <div class="studio-upload-meta">
+                  <label for="prod-image-file" class="btn-secondary studio-upload-btn">
+                    اختر صورة من الاستوديو
+                  </label>
+                  <input id="prod-image-file" class="sr-only-input" type="file" accept="image/*" />
+                  <p class="studio-upload-hint">اختر صورة من جهازك أو بدّل من الصور الجاهزة بالأسفل</p>
+                </div>
+              </div>
+              <input id="prod-image" type="hidden" />
+              <div id="preset-image-picker" class="preset-thumbs" aria-label="صور كافيه جاهزة"></div>
+            </div>
+
+            <label class="checkbox-row">
+              <input id="prod-available" type="checkbox" checked />
+              <span>متوفر للطلب حالياً في المينيو</span>
+            </label>
+
+            <div class="hero-actions">
+              <button type="submit" id="prod-submit-btn" class="btn-primary">حفظ ونشر فوري للمينيو</button>
+              <button type="button" id="prod-cancel-edit-btn" class="btn-secondary is-hidden">إلغاء التعديل</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-panel-card">
+          <h3>قائمة المنتجات الحالية (<span id="admin-products-count" class="tabular">0</span>)</h3>
+          <div id="admin-products-list" class="admin-list"></div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Categories CMS -->
+      <section id="admin-tab-categories" class="admin-grid is-hidden">
+        <div class="admin-panel-card">
+          <h3 id="category-form-heading">إضافة قسم جديد</h3>
+          <form id="category-form" class="form-stack">
+            <input type="hidden" id="cat-id" />
+
+            <div class="field-group">
+              <label for="cat-name" class="field-label">اسم القسم</label>
+              <input id="cat-name" class="field-input" type="text" required placeholder="مثال: مشروبات موسمية" />
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label for="cat-subtitle" class="field-label">وصف قصير للقسم</label>
+                <input id="cat-subtitle" class="field-input" type="text" placeholder="تشكيلة محدودة لفصل الشتاء" />
+              </div>
+              <div class="field-group">
+                <label for="cat-order" class="field-label">ترتيب الظهور</label>
+                <input id="cat-order" class="field-input tabular" type="number" min="1" value="1" />
+              </div>
+            </div>
+
+            <label class="checkbox-row">
+              <input id="cat-visible" type="checkbox" checked />
+              <span>إظهار القسم للزبائن</span>
+            </label>
+
+            <div class="hero-actions">
+              <button type="submit" class="btn-primary">حفظ القسم ونشره</button>
+              <button type="button" id="cat-cancel-edit-btn" class="btn-secondary is-hidden">إلغاء التعديل</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-panel-card">
+          <h3>الأقسام الحالية (<span id="admin-categories-count" class="tabular">0</span>)</h3>
+          <div id="admin-categories-list" class="admin-list"></div>
+        </div>
+      </section>
+
+      <!-- Tab 3: Café Name & WhatsApp Settings -->
+      <section id="admin-tab-settings" class="admin-panel-card is-hidden">
+        <h3>إعدادات الكافيه ورقم استقبال واتساب</h3>
+        <form id="settings-form" class="form-stack">
+          <div class="field-row">
+            <div class="field-group">
+              <label for="setting-cafe-name" class="field-label">اسم الكافيه</label>
+              <input id="setting-cafe-name" class="field-input" type="text" required />
+            </div>
+            <div class="field-group">
+              <label for="setting-whatsapp" class="field-label">رقم الواتساب لاستقبال الطلبات</label>
+              <input id="setting-whatsapp" class="field-input tabular" dir="ltr" type="text" required placeholder="0940242745" />
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button type="submit" class="btn-primary">حفظ وتحديث المينيو فوراً</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p id="admin-footer-note">لوحة إدارة المينيو — M&amp;S</p>
+        <p>واتساب الطلبات: <span id="admin-whatsapp-display" class="tabular" dir="ltr">0940242745</span></p>
+      </div>
+    </footer>
+
+    <!-- Toast Feedback -->
+    <div id="toast-banner" class="toast-banner is-hidden" role="status" aria-live="polite">
+      <span id="toast-text"></span>
+    </div>
+
+    <script type="module">
+// ==========================================
+// 1. Default Data & Local Fallback Storage
+// ==========================================
+const STORAGE_KEY = "bento_cafe_menu_state_v3";
+const DEFAULT_CAFE_STATE = {
+  settings: {
+    cafeName: "M&S",
+    whatsappNumber: "0940242745"
+  },
+  categories: [
+    {
+      id: "cat-specialty",
+      name: "القهوة المختصة والتقطير",
+      subtitle: "محاصيل أحادية المصدر محمصة أسبوعياً",
+      order: 1,
+      visible: true
+    },
+    {
+      id: "cat-cold",
+      name: "الماتشا والمشروبات الباردة",
+      subtitle: "طبقات منعشة ومزيج إسبريسو بارد",
+      order: 2,
+      visible: true
+    },
+    {
+      id: "cat-bakery",
+      name: "المخبوزات والحلويات",
+      subtitle: "تُخبز صباحاً بالزبدة الفرنسية",
+      order: 3,
+      visible: true
+    }
+  ],
+  items: [
+    {
+      id: "item-matcha-espresso",
+      categoryId: "cat-cold",
+      name: "ماتشا احتفالية بطبقات الإسبريسو",
+      price: 34000,
+      shortDesc: "ماتشا أوجي اليابانية مع حليب الشوفان وجرعة إسبريسو مزدوجة",
+      imageUrl: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80",
+      bentoSize: "featured",
+      available: true,
+      options: ["حليب شوفان", "حليب لوز", "قليل السكر"],
+      order: 1
+    },
+    {
+      id: "item-v60-ethiopia",
+      categoryId: "cat-specialty",
+      name: "تقطير V60 إثيوبيا ييرغاتشيف",
+      price: 26000,
+      shortDesc: "إيحاءات الياسمين والبرغموت والعسل الأبيض بدرجة تحميص فاتحة",
+      imageUrl: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+      bentoSize: "wide",
+      available: true,
+      options: ["ساخن", "مثلج", "بدون سكر"],
+      order: 2
+    },
+    {
+      id: "item-rosemary-tonic",
+      categoryId: "cat-cold",
+      name: "إسبريسو تونيك بالروزماري",
+      price: 28000,
+      shortDesc: "فوران الحمضيات الباردة مع إكليل الجبل الطازج والقهوة المختصة",
+      imageUrl: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80",
+      bentoSize: "compact",
+      available: true,
+      options: ["مع إكليل جبل", "دبل شوت"],
+      order: 3
+    },
+    {
+      id: "item-pistachio-croissant",
+      categoryId: "cat-bakery",
+      name: "كرواسون الفستق الصقلي",
+      price: 24000,
+      shortDesc: "عجينة مورّقة ٢٧ طبقة محشوة بكريمة الفستق المحمص",
+      imageUrl: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80",
+      bentoSize: "compact",
+      available: true,
+      options: ["مسخّن بالفرن", "عادي"],
+      order: 4
+    },
+    {
+      id: "item-flat-white",
+      categoryId: "cat-specialty",
+      name: "فلات وايت البرازيل سيرادو",
+      price: 22000,
+      shortDesc: "توازن كريمي بإيحاءات البندق المحمص والشوكولاتة بالحليب",
+      imageUrl: "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80",
+      bentoSize: "wide",
+      available: true,
+      options: ["حليب كامل", "حليب شوفان", "حبة إضافية"],
+      order: 5
+    },
+    {
+      id: "item-fig-tart",
+      categoryId: "cat-bakery",
+      name: "تارت التين المشوي بالعسل",
+      price: 30000,
+      shortDesc: "تارت اللوز الهش مع تين مكرمل وزعتر بري",
+      imageUrl: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+      bentoSize: "compact",
+      available: true,
+      options: ["مع كريمة جانبية", "بدون إضافات"],
+      order: 6
+    }
+  ]
+};
+
+const LocalMenuAdapter = {
+  loadState() {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return structuredClone(DEFAULT_CAFE_STATE);
+      const parsed = JSON.parse(raw);
+      return {
+        settings: { ...DEFAULT_CAFE_STATE.settings, ...(parsed.settings || {}) },
+        categories: Array.isArray(parsed.categories) ? parsed.categories : structuredClone(DEFAULT_CAFE_STATE.categories),
+        items: Array.isArray(parsed.items) ? parsed.items : structuredClone(DEFAULT_CAFE_STATE.items)
+      };
+    } catch {
+      return structuredClone(DEFAULT_CAFE_STATE);
+    }
+  },
+  saveState(stateObj) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
+    } catch {}
+  }
+};
+
+// ==========================================
+// 2. Helper Functions
+// ==========================================
+function formatSyp(amount) {
+  const numeric = Number(amount) || 0;
+  return `${numeric.toLocaleString("en-US")} ل.س`;
+}
+
+function buildCategoryObject(categories, categoryInput) {
+  const id = categoryInput.id || `cat-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+  return {
+    id,
+    name: String(categoryInput.name || "").trim(),
+    subtitle: String(categoryInput.subtitle || "").trim(),
+    order: Number(categoryInput.order) || categories.length + 1,
+    visible: categoryInput.visible !== false
+  };
+}
+
+function buildMenuItemObject(items, itemInput) {
+  const id = itemInput.id || `item-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+  const validSizes = new Set(["featured", "wide", "compact"]);
+  const bentoSize = validSizes.has(itemInput.bentoSize) ? itemInput.bentoSize : "compact";
+  return {
+    id,
+    categoryId: itemInput.categoryId,
+    name: String(itemInput.name || "").trim(),
+    price: Math.max(0, Number(itemInput.price) || 0),
+    shortDesc: String(itemInput.shortDesc || "").trim(),
+    imageUrl: String(itemInput.imageUrl || "").trim(),
+    bentoSize,
+    available: itemInput.available !== false,
+    options: Array.isArray(itemInput.options)
+      ? itemInput.options.filter(Boolean)
+      : String(itemInput.optionsText || "").split("،").map((s) => s.trim()).filter(Boolean),
+    order: Number(itemInput.order) || items.length + 1
+  };
+}
+
+function computeTargetDimensions(width, height, maxEdge = 720) {
+  const safeW = Math.max(1, Number(width) || 1);
+  const safeH = Math.max(1, Number(height) || 1);
+  if (safeW <= maxEdge && safeH <= maxEdge) return { width: Math.round(safeW), height: Math.round(safeH) };
+  if (safeW >= safeH) return { width: maxEdge, height: Math.max(1, Math.round((safeH * maxEdge) / safeW)) };
+  return { width: Math.max(1, Math.round((safeW * maxEdge) / safeH)), height: maxEdge };
+}
+
+async function compressImageFile(file) {
+  const rawDataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("تعذر قراءة الصورة"));
+    reader.readAsDataURL(file);
+  });
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("تعذر تحميل الصورة"));
+    image.src = rawDataUrl;
+  });
+  const { width, height } = computeTargetDimensions(img.naturalWidth || img.width, img.naturalHeight || img.height, 720);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return rawDataUrl;
+  ctx.fillStyle = "#211b18";
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(img, 0, 0, width, height);
+  let quality = 0.74;
+  let output = canvas.toDataURL("image/jpeg", quality);
+  while (output.length * 0.75 > 140 * 1024 && quality > 0.42) {
+    quality = Math.max(0.42, quality - 0.1);
+    output = canvas.toDataURL("image/jpeg", quality);
+  }
+  return output;
+}
+
+// ==========================================
+// 3. Firebase & Real-time onSnapshot Engine
+// ==========================================
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  deleteDoc,
+  onSnapshot,
+  writeBatch
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCtCjHQHLqV5gGpoMuK3JGiYTrb9rp1wXE",
+  authDomain: "ssss-1fa68.firebaseapp.com",
+  projectId: "ssss-1fa68",
+  storageBucket: "ssss-1fa68.firebasestorage.app",
+  messagingSenderId: "1033946151481",
+  appId: "1:1033946151481:web:c3c94114e01b25616aabe8",
+  measurementId: "G-JQD4HVWLSD"
+};
+
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let state = LocalMenuAdapter.loadState();
+let hasSeededOnce = false;
+
+function subscribeToFirebaseMenu(onData, onError) {
+  let categories = [...state.categories];
+  let items = [...state.items];
+  let settings = { ...state.settings };
+  let catsLoaded = false;
+  let itemsLoaded = false;
+  let settingsLoaded = false;
+
+  const emit = async () => {
+    // إذا كانت قاعدة البيانات فارغة تماماً عند أول اتصال، نرفع البيانات الافتراضية تلقائياً ليعمل onSnapshot فوراً
+    if (catsLoaded && itemsLoaded && settingsLoaded && categories.length === 0 && items.length === 0 && !hasSeededOnce) {
+      hasSeededOnce = true;
+      try {
+        await seedInitialMenuToFirestore(DEFAULT_CAFE_STATE);
+        return;
+      } catch (e) {
+        console.warn("Auto-seed skipped:", e);
+      }
+    }
+
+    const nextState = {
+      settings,
+      categories: categories.sort((a, b) => (a.order || 0) - (b.order || 0)),
+      items: items.sort((a, b) => (a.order || 0) - (b.order || 0))
+    };
+    LocalMenuAdapter.saveState(nextState);
+    onData(nextState);
+  };
+
+  const unsubCats = onSnapshot(
+    collection(db, "categories"),
+    (snapshot) => {
+      categories = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+      catsLoaded = true;
+      emit();
+    },
+    (err) => { if (onError) onError(err); }
+  );
+
+  const unsubItems = onSnapshot(
+    collection(db, "items"),
+    (snapshot) => {
+      items = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+      itemsLoaded = true;
+      emit();
+    },
+    (err) => { if (onError) onError(err); }
+  );
+
+  const unsubSettings = onSnapshot(
+    doc(db, "settings", "general"),
+    (snapshot) => {
+      if (snapshot.exists()) {
+        settings = { ...DEFAULT_CAFE_STATE.settings, ...snapshot.data() };
+      }
+      settingsLoaded = true;
+      emit();
+    },
+    (err) => {
+      settingsLoaded = true;
+      emit();
+    }
+  );
+
+  return () => {
+    unsubCats();
+    unsubItems();
+    unsubSettings();
+  };
+}
+
+async function saveItemToFirestore(item) {
+  await setDoc(doc(db, "items", item.id), item, { merge: true });
+}
+
+async function deleteItemFromFirestore(itemId) {
+  await deleteDoc(doc(db, "items", itemId));
+}
+
+async function saveCategoryToFirestore(category) {
+  await setDoc(doc(db, "categories", category.id), category, { merge: true });
+}
+
+async function deleteCategoryFromFirestore(categoryId, associatedItemIds = []) {
+  const batch = writeBatch(db);
+  batch.delete(doc(db, "categories", categoryId));
+  associatedItemIds.forEach((itemId) => {
+    batch.delete(doc(db, "items", itemId));
+  });
+  await batch.commit();
+}
+
+async function saveSettingsToFirestore(settings) {
+  await setDoc(doc(db, "settings", "general"), settings, { merge: true });
+}
+
+async function seedInitialMenuToFirestore(initialState = DEFAULT_CAFE_STATE) {
+  const batch = writeBatch(db);
+  batch.set(doc(db, "settings", "general"), initialState.settings, { merge: true });
+  initialState.categories.forEach((cat) => {
+    batch.set(doc(db, "categories", cat.id), cat, { merge: true });
+  });
+  initialState.items.forEach((item) => {
+    batch.set(doc(db, "items", item.id), item, { merge: true });
+  });
+  await batch.commit();
+}
+
+// ==========================================
+// 4. Admin UI Rendering & Events
+// ==========================================
+const PRESET_IMAGES = [
+  "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+];
+
+const SIZE_LABELS = {
+  featured: "مميزة كبيرة (2×2)",
+  wide: "عريضة (2×1)",
+  compact: "مدمجة (1×1)"
+};
+
+let toastTimer = null;
+const $ = (id) => document.getElementById(id);
+
+function showToast(message) {
+  const banner = $("toast-banner");
+  $("toast-text").textContent = message;
+  banner.classList.remove("is-hidden");
+  if (toastTimer) window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => {
+    banner.classList.add("is-hidden");
+  }, 3200);
+}
+
+function getCategoryName(categoryId) {
+  const cat = state.categories.find((c) => c.id === categoryId);
+  return cat ? cat.name : "بدون قسم";
+}
+
+function setProductImage(imageUrl) {
+  const finalUrl = imageUrl || PRESET_IMAGES[0];
+  $("prod-image").value = finalUrl;
+  $("prod-image-preview").src = finalUrl;
+  renderPresetImagePicker();
+}
+
+function renderPresetImagePicker() {
+  const wrap = $("preset-image-picker");
+  const currentUrl = $("prod-image").value.trim();
+  wrap.innerHTML = "";
+  PRESET_IMAGES.forEach((url, index) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `preset-thumb-btn ${currentUrl === url ? "is-selected" : ""}`;
+    btn.setAttribute("aria-label", `اختيار صورة كافيه جاهزة ${index + 1}`);
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = `صورة كافيه جاهزة ${index + 1}`;
+    btn.appendChild(img);
+    btn.addEventListener("click", () => setProductImage(url));
+    wrap.appendChild(btn);
+  });
+}
+
+function renderAdminCategoryDropdown() {
+  const select = $("prod-category");
+  const currentVal = select.value;
+  select.innerHTML = "";
+  state.categories.forEach((cat) => {
+    const opt = document.createElement("option");
+    opt.value = cat.id;
+    opt.textContent = cat.name;
+    select.appendChild(opt);
+  });
+  if (currentVal && state.categories.some((c) => c.id === currentVal)) {
+    select.value = currentVal;
+  }
+}
+
+function resetProductForm() {
+  $("prod-id").value = "";
+  $("prod-name").value = "";
+  $("prod-price").value = "";
+  $("prod-bento-size").value = "compact";
+  $("prod-options").value = "";
+  $("prod-short-desc").value = "";
+  $("prod-image-file").value = "";
+  setProductImage(PRESET_IMAGES[0]);
+  $("prod-available").checked = true;
+  $("product-form-heading").textContent = "إضافة منتج جديد";
+  $("prod-submit-btn").textContent = "حفظ ونشر فوري للمينيو";
+  $("prod-cancel-edit-btn").classList.add("is-hidden");
+}
+
+function resetCategoryForm() {
+  $("cat-id").value = "";
+  $("cat-name").value = "";
+  $("cat-subtitle").value = "";
+  $("cat-order").value = String(state.categories.length + 1);
+  $("cat-visible").checked = true;
+  $("category-form-heading").textContent = "إضافة قسم جديد";
+  $("cat-cancel-edit-btn").classList.add("is-hidden");
+}
+
+function renderAdminProductsList() {
+  const list = $("admin-products-list");
+  $("admin-products-count").textContent = String(state.items.length);
+  list.innerHTML = "";
+  if (state.items.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = "لا توجد منتجات بعد. أضف أول منتج من النموذج الجانبي ليظهر فوراً على المينيو.";
+    list.appendChild(empty);
+    return;
+  }
+
+  state.items.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "admin-row";
+
+    const info = document.createElement("div");
+    info.className = "admin-row-info";
+    const title = document.createElement("p");
+    title.className = "admin-row-title";
+    title.textContent = item.name;
+    const meta = document.createElement("p");
+    meta.className = "admin-row-meta";
+    meta.textContent = `${getCategoryName(item.categoryId)} · ${formatSyp(item.price)} · ${SIZE_LABELS[item.bentoSize] || "مدمجة"} · ${item.available ? "متوفر" : "مخفي"}`;
+    info.append(title, meta);
+
+    const actions = document.createElement("div");
+    actions.className = "admin-row-actions";
+
+    const toggleBtn = document.createElement("button");
+    toggleBtn.type = "button";
+    toggleBtn.className = "btn-small";
+    toggleBtn.textContent = item.available ? "إيقاف مؤقت" : "تفعيل";
+    toggleBtn.addEventListener("click", async () => {
+      const updated = { ...item, available: !item.available };
+      try {
+        await saveItemToFirestore(updated);
+        showToast(`تم ${updated.available ? "تفعيل" : "إيقاف"} «${item.name}» على المينيو مباشرة`);
+      } catch (err) {
+        console.error(err);
+        showToast("خطأ في الاتصال بـ Firebase: تحقق من أذونات Firestore");
+      }
+    });
+
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "btn-small";
+    editBtn.textContent = "تعديل";
+    editBtn.addEventListener("click", () => {
+      $("prod-id").value = item.id;
+      $("prod-name").value = item.name;
+      $("prod-category").value = item.categoryId;
+      $("prod-price").value = String(item.price);
+      $("prod-bento-size").value = item.bentoSize || "compact";
+      $("prod-options").value = (item.options || []).join("، ");
+      $("prod-short-desc").value = item.shortDesc;
+      $("prod-available").checked = item.available !== false;
+      $("prod-image-file").value = "";
+      setProductImage(item.imageUrl || PRESET_IMAGES[0]);
+      $("product-form-heading").textContent = `تعديل: ${item.name}`;
+      $("prod-submit-btn").textContent = "حفظ التعديل على المينيو";
+      $("prod-cancel-edit-btn").classList.remove("is-hidden");
+      $("product-form-heading").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    const delBtn = document.createElement("button");
+    delBtn.type = "button";
+    delBtn.className = "btn-small btn-danger";
+    delBtn.textContent = "حذف";
+    delBtn.addEventListener("click", async () => {
+      if (!confirm(`هل أنت متأكد من حذف «${item.name}»؟ سيختفي فوراً من المينيو.`)) return;
+      try {
+        await deleteItemFromFirestore(item.id);
+        showToast(`تم حذف «${item.name}» من المينيو مباشرة`);
+      } catch (err) {
+        console.error(err);
+        showToast("خطأ في الحذف من Firebase");
+      }
+    });
+
+    actions.append(toggleBtn, editBtn, delBtn);
+    row.append(info, actions);
+    list.appendChild(row);
+  });
+}
+
+function renderAdminCategoriesList() {
+  const list = $("admin-categories-list");
+  $("admin-categories-count").textContent = String(state.categories.length);
+  list.innerHTML = "";
+
+  state.categories.forEach((cat) => {
+    const row = document.createElement("div");
+    row.className = "admin-row";
+
+    const info = document.createElement("div");
+    info.className = "admin-row-info";
+    const title = document.createElement("p");
+    title.className = "admin-row-title";
+    title.textContent = cat.name;
+    const count = state.items.filter((i) => i.categoryId === cat.id).length;
+    const meta = document.createElement("p");
+    meta.className = "admin-row-meta";
+    meta.textContent = `ترتيب: ${cat.order} · الأصناف: ${count} · ${cat.visible ? "ظاهر للزبائن" : "مخفي"}`;
+    info.append(title, meta);
+
+    const actions = document.createElement("div");
+    actions.className = "admin-row-actions";
+
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "btn-small";
+    editBtn.textContent = "تعديل";
+    editBtn.addEventListener("click", () => {
+      $("cat-id").value = cat.id;
+      $("cat-name").value = cat.name;
+      $("cat-subtitle").value = cat.subtitle || "";
+      $("cat-order").value = String(cat.order);
+      $("cat-visible").checked = cat.visible !== false;
+      $("category-form-heading").textContent = `تعديل قسم: ${cat.name}`;
+      $("cat-cancel-edit-btn").classList.remove("is-hidden");
+      $("category-form-heading").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    const delBtn = document.createElement("button");
+    delBtn.type = "button";
+    delBtn.className = "btn-small btn-danger";
+    delBtn.textContent = "حذف";
+    delBtn.addEventListener("click", async () => {
+      if (!confirm(`حذف قسم «${cat.name}» سيحذف جميع الأصناف التابعة له (${count} أصناف). هل تريد المتابعة؟`)) return;
+      const associatedItemIds = state.items.filter((i) => i.categoryId === cat.id).map((i) => i.id);
+      try {
+        await deleteCategoryFromFirestore(cat.id, associatedItemIds);
+        showToast(`تم حذف قسم «${cat.name}» من المينيو مباشرة`);
+      } catch (err) {
+        console.error(err);
+        showToast("خطأ في حذف القسم من Firebase");
+      }
+    });
+
+    actions.append(editBtn, delBtn);
+    row.append(info, actions);
+    list.appendChild(row);
+  });
+}
+
+function renderSettingsForm() {
+  const s = state.settings;
+  $("setting-cafe-name").value = s.cafeName || "M&S";
+  $("setting-whatsapp").value = s.whatsappNumber || "0940242745";
+  $("admin-whatsapp-display").textContent = s.whatsappNumber || "0940242745";
+  $("admin-footer-note").textContent = `لوحة إدارة المينيو — ${s.cafeName || "M&S"}`;
+}
+
+function switchAdminTab(tabName) {
+  ["products", "categories", "settings"].forEach((name) => {
+    const sec = $(`admin-tab-${name}`);
+    const btn = document.querySelector(`[data-admin-tab="${name}"]`);
+    const isTarget = name === tabName;
+    if (sec) sec.classList.toggle("is-hidden", !isTarget);
+    if (btn) btn.classList.toggle("is-active", isTarget);
+  });
+}
+
+function renderAll() {
+  renderAdminCategoryDropdown();
+  renderAdminProductsList();
+  renderAdminCategoriesList();
+  renderSettingsForm();
+  renderPresetImagePicker();
+}
+
+function bindEvents() {
+  const syncBtn = $("admin-sync-firebase-btn");
+  if (syncBtn) {
+    syncBtn.addEventListener("click", async () => {
+      syncBtn.disabled = true;
+      syncBtn.textContent = "جارٍ الرفع إلى Firebase...";
+      try {
+        await seedInitialMenuToFirestore(state);
+        showToast("تمت مزامنة ورفع كافة الأقسام والمنتجات إلى Firebase بنجاح!");
+      } catch (err) {
+        console.error(err);
+        showToast("حدث خطأ أثناء الرفع: يرجى التحقق من أذونات قواعد Firestore");
+      } finally {
+        syncBtn.disabled = false;
+        syncBtn.textContent = "رفع البيانات الافتراضية إلى Firebase";
+      }
+    });
+  }
+
+  document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => switchAdminTab(btn.getAttribute("data-admin-tab")));
+  });
+
+  $("prod-image-file").addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      const compressedDataUrl = await compressImageFile(file);
+      setProductImage(compressedDataUrl);
+    } catch {
+      showToast("تعذر تجهيز الصورة، يرجى اختيار صورة أخرى");
+    }
+  });
+
+  $("product-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const existingItem = state.items.find((i) => i.id === $("prod-id").value);
+    const savedItem = buildMenuItemObject(state.items, {
+      id: $("prod-id").value || undefined,
+      name: $("prod-name").value,
+      categoryId: $("prod-category").value,
+      price: $("prod-price").value,
+      bentoSize: $("prod-bento-size").value,
+      optionsText: $("prod-options").value,
+      shortDesc: $("prod-short-desc").value,
+      imageUrl: $("prod-image").value,
+      available: $("prod-available").checked,
+      order: existingItem ? existingItem.order : state.items.length + 1
+    });
+
+    const submitBtn = $("prod-submit-btn");
+    submitBtn.disabled = true;
+    try {
+      await saveItemToFirestore(savedItem);
+      resetProductForm();
+      showToast("✅ تم حفظ المنتج وانعكس فوراً على المينيو!");
+    } catch (err) {
+      console.error(err);
+      showToast("❌ فشل الحفظ في Firebase: تأكد من صلاحيات الكتابة في Firestore");
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  $("prod-cancel-edit-btn").addEventListener("click", resetProductForm);
+
+  $("category-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const savedCat = buildCategoryObject(state.categories, {
+      id: $("cat-id").value || undefined,
+      name: $("cat-name").value,
+      subtitle: $("cat-subtitle").value,
+      order: $("cat-order").value,
+      visible: $("cat-visible").checked
+    });
+
+    try {
+      await saveCategoryToFirestore(savedCat);
+      resetCategoryForm();
+      showToast("✅ تم حفظ القسم وانعكس فوراً على المينيو!");
+    } catch (err) {
+      console.error(err);
+      showToast("❌ فشل حفظ القسم في Firebase");
+    }
+  });
+
+  $("cat-cancel-edit-btn").addEventListener("click", resetCategoryForm);
+
+  $("settings-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nextSettings = {
+      cafeName: $("setting-cafe-name").value.trim(),
+      whatsappNumber: $("setting-whatsapp").value.trim()
+    };
+    try {
+      await saveSettingsToFirestore(nextSettings);
+      showToast("✅ تم تحديث الإعدادات وانعكست فوراً على المينيو!");
+    } catch (err) {
+      console.error(err);
+      showToast("❌ فشل حفظ الإعدادات في Firebase");
+    }
+  });
+}
+
+function applyTheme(theme) {
+  const normalized = theme === "light" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", normalized);
+  localStorage.setItem("mand_theme", normalized);
+  const btn = $("theme-toggle-btn");
+  if (btn) btn.setAttribute("aria-pressed", normalized === "light" ? "true" : "false");
+}
+
+function initTheme() {
+  applyTheme(localStorage.getItem("mand_theme") || "dark");
+  const btn = $("theme-toggle-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "light" ? "dark" : "light");
+    });
+  }
+}
+
+function checkAdminAuth(user) {
+  const loginScreen = $("admin-login-screen");
+  const adminView = $("admin-view");
+  const userEmailBadge = $("admin-user-email");
+  const logoutBtn = $("admin-logout-btn");
+  if (!user) {
+    if (loginScreen) loginScreen.classList.remove("is-hidden");
+    if (adminView) {
+      adminView.style.filter = "blur(6px)";
+      adminView.style.pointerEvents = "none";
+    }
+    if (userEmailBadge) userEmailBadge.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "none";
+  } else {
+    if (loginScreen) loginScreen.classList.add("is-hidden");
+    if (adminView) {
+      adminView.style.filter = "none";
+      adminView.style.pointerEvents = "auto";
+    }
+    if (userEmailBadge) {
+      userEmailBadge.textContent = user.email || "مشرف";
+      userEmailBadge.style.display = "inline-block";
+    }
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+  }
+}
+
+function bindAdminAuthEvents() {
+  const loginForm = $("admin-login-form");
+  const errorEl = $("admin-auth-error");
+  const loginBtn = $("admin-login-btn");
+  const signupBtn = $("admin-signup-btn");
+
+  const showError = (msg) => {
+    if (errorEl) {
+      errorEl.textContent = msg;
+      errorEl.classList.remove("is-hidden");
+    }
+  };
+  const clearError = () => {
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.classList.add("is-hidden");
+    }
+  };
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearError();
+      const email = $("admin-email").value.trim();
+      const pass = $("admin-password").value.trim();
+      loginBtn.disabled = true;
+      loginBtn.textContent = "جارٍ التحقق...";
+      try {
+        const cred = await signInWithEmailAndPassword(auth, email, pass);
+        checkAdminAuth(cred.user);
+        showToast(`مرحباً بك! تم تسجيل الدخول (${cred.user.email})`);
+      } catch (err) {
+        console.error(err);
+        showError("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = "تسجيل الدخول";
+      }
+    });
+  }
+
+  if (signupBtn) {
+    signupBtn.addEventListener("click", async () => {
+      clearError();
+      const email = $("admin-email").value.trim();
+      const pass = $("admin-password").value.trim();
+      if (!email || pass.length < 6) {
+        showError("يرجى كتابة بريد صالح وكلمة مرور من 6 أحرف على الأقل.");
+        return;
+      }
+      signupBtn.disabled = true;
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        checkAdminAuth(cred.user);
+        showToast(`تم إنشاء حساب المشرف بنجاح (${cred.user.email})`);
+      } catch (err) {
+        console.error(err);
+        showError("تعذر إنشاء الحساب: ربما البريد مسجل مسبقاً.");
+      } finally {
+        signupBtn.disabled = false;
+      }
+    });
+  }
+
+  const logoutBtn = $("admin-logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      checkAdminAuth(null);
+      showToast("تم تسجيل الخروج بنجاح");
+    });
+  }
+
+  onAuthStateChanged(auth, (user) => checkAdminAuth(user));
+}
+
+// تفعيل الاستماع الفوري onSnapshot
+subscribeToFirebaseMenu(
+  (firestoreState) => {
+    state = firestoreState;
+    renderAll();
+  },
+  (err) => {
+    console.warn("Real-time Firestore listener:", err);
+    const badge = $("admin-firebase-badge");
+    if (badge) {
+      badge.textContent = "🔴 خطأ في المزامنة";
+      badge.style.color = "var(--danger)";
+      badge.style.borderColor = "var(--danger)";
+    }
+  }
+);
+
+initTheme();
+bindAdminAuthEvents();
+resetProductForm();
+resetCategoryForm();
+bindEvents();
+renderAll();
+    </script>
+  </body>
+</html>
